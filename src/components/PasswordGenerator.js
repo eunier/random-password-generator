@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useRandomPasswordGenerator from './hooks/useRandomPasswordGenerator';
 
 const PasswordGenerator = () => {
+  const [withLowercase, setWithLowercase] = useState(false);
   const [randomPassword, generateRandomPassword] = useRandomPasswordGenerator();
+
+  // const useCallback
 
   useEffect(() => generateRandomPassword(), [generateRandomPassword]);
 
@@ -13,9 +16,26 @@ const PasswordGenerator = () => {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col d-flex justify-content-center">
-          <form onSubmit={onGenerateRandomPasswordHandler}>
+      <form onSubmit={onGenerateRandomPasswordHandler}>
+        <div className="row">
+          <div className="col d-flex justify-content-center">
+            <div className="form-group">
+              <input
+                className="form-check-input"
+                id="lowercase-letters"
+                type="checkbox"
+                checked={withLowercase}
+                onChange={e => setWithLowercase(e.target.checked)}
+              />
+              <label className="form-check-label" htmlFor="lowercase-letters">
+                Lowercase Letters
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col d-flex justify-content-center">
             <button
               className="btn btn-primary"
               type="submit"
@@ -23,9 +43,9 @@ const PasswordGenerator = () => {
             >
               Generate Random Password
             </button>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
 
       <div className="row">
         <div className="col d-flex justify-content-center">
