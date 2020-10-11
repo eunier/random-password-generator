@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import React, { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 
-import useRandomPasswordGenerator from './hooks/useRandomPasswordGenerator';
-import useVarNameString from './hooks/useVarNameString';
-import useRange from './hooks/useRange';
+import useRandomPasswordGenerator from "../hooks/useRandomPasswordGenerator";
+import useVarNameString from "../hooks/useVarNameString";
+import useRange from "../hooks/useRange";
 
 const PasswordGenerator = () => {
   const [withLowercase, setWithLowercase] = useState(false);
@@ -25,31 +25,31 @@ const PasswordGenerator = () => {
           getVarNameString({ withLowercase }),
           withLowercase,
           setWithLowercase,
-          'Lowercase Letters',
+          "Lowercase Letters"
         ],
         [
           getVarNameString({ withUppercase }),
           withUppercase,
           setWithUppercase,
-          'Uppercase Letters',
+          "Uppercase Letters"
         ],
         [
           getVarNameString({ withNumbers }),
           withNumbers,
           setWithNumbers,
-          'Numbers',
+          "Numbers"
         ],
         [
           getVarNameString({ withSymbols }),
           withSymbols,
           setWithSymbols,
-          'Symbols',
-        ],
+          "Symbols"
+        ]
       ].map(([key, state, setState, desc]) => ({
         key,
         state,
         setState,
-        desc,
+        desc
       }))
     );
   }, [
@@ -57,7 +57,7 @@ const PasswordGenerator = () => {
     withUppercase,
     withNumbers,
     withSymbols,
-    getVarNameString,
+    getVarNameString
   ]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const PasswordGenerator = () => {
     withNumbers,
     withSymbols,
     passwordLen,
-    checkboxCtrl,
+    checkboxCtrl
   ]);
 
   const onGenerateRandomPasswordHandler = e => {
@@ -135,15 +135,11 @@ const PasswordGenerator = () => {
                     </option>
                   );
                 })}
-                {getRange(2048 / (2048 / 4)).map((_el, idx) => {
-                  const optionVal = (idx + 1) * (2048 / 4);
-
-                  return (
-                    <option key={uuid()} value={optionVal}>
-                      {optionVal}
-                    </option>
-                  );
-                })}
+                {[256, 512, 1024, 2048].map(el => (
+                  <option key={uuid()} value={el}>
+                    {el}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

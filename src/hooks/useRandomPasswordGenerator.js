@@ -27,7 +27,7 @@ const useRandomPasswordGenerator = () => {
       const charCode_a_z = ["a".charCodeAt(0), "z".charCodeAt(0)];
       const charCode_A_Z = ["A".charCodeAt(0), "Z".charCodeAt(0)];
       const charCode_0_9 = ["0".charCodeAt(0), "9".charCodeAt(0)];
-      const symbols = '!@#$%^&*()_+{}|:"<>?-=[]\\,./';
+      const symbols = '!@#$%^&*()_+{}|:"<>?-=[],./';
 
       const chars = [
         withLowercase ? charCode_a_z : null,
