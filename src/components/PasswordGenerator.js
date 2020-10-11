@@ -46,16 +46,18 @@ const PasswordGenerator = () => {
     const containsCheckedCheckbox = withOption => withOption === true;
 
     setAnyCheckboxChecked(!!checkboxesValues.find(containsCheckedCheckbox));
-    setPasswordGeneratorOpts(
-      checkboxCtrl.map(({ key, state }) => ({
-        [key]: state,
-      }))
+
+    const _passwordGeneratorOpts = {};
+
+    checkboxCtrl.forEach(
+      ({ key, state }) => (_passwordGeneratorOpts[key] = state)
     );
+
+    setPasswordGeneratorOpts(_passwordGeneratorOpts);
   }, [withLowercase, withUppercase, checkboxCtrl]);
 
   const onGenerateRandomPasswordHandler = e => {
     e.preventDefault();
-    console.log({ passwordGeneratorOpts });
     generateRandomPassword(passwordGeneratorOpts);
   };
 
@@ -103,7 +105,7 @@ const PasswordGenerator = () => {
 
       <div className="row">
         <div className="col d-flex justify-content-center">
-          <div>Password: {randomPassword}</div>
+          <p>{randomPassword}</p>
         </div>
       </div>
     </div>
