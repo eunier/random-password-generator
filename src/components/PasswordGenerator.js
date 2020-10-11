@@ -9,6 +9,7 @@ const PasswordGenerator = () => {
   const [withUppercase, setWithUppercase] = useState(false);
   const [withNumbers, setWithNumbers] = useState(false);
   const [withSymbols, setWithSymbols] = useState(false);
+  const [passwordLen, setPasswordLen] = useState(0);
   const [checkboxCtrl, setCheckboxCtrl] = useState([]);
   const [anyCheckboxChecked, setAnyCheckboxChecked] = useState(false);
   const [passwordGeneratorOpts, setPasswordGeneratorOpts] = useState(null);
@@ -105,6 +106,43 @@ const PasswordGenerator = () => {
             </div>
           );
         })}
+
+        <div className="row">
+          <div className="col d-flex justify-content-center">
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="password-len-dropdown"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+
+              <div
+                className="dropdown-menu"
+                aria-labelledby="password-len-dropdown"
+                onClick={e => console.log(e)}
+              >
+                <button
+                  className="dropdown-item"
+                  type="button"
+                  onClick={e => console.log(e)}
+                >
+                  30
+                </button>
+                <button className="dropdown-item" type="button">
+                  400
+                </button>
+                <button className="dropdown-item" type="button">
+                  2048
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="row">
           <div className="col d-flex justify-content-center">
