@@ -3,18 +3,20 @@ import { v4 as uuid } from 'uuid';
 
 import useRandomPasswordGenerator from './hooks/useRandomPasswordGenerator';
 import useVarNameString from './hooks/useVarNameString';
+import useRange from './hooks/useRange';
 
 const PasswordGenerator = () => {
   const [withLowercase, setWithLowercase] = useState(false);
   const [withUppercase, setWithUppercase] = useState(false);
   const [withNumbers, setWithNumbers] = useState(false);
   const [withSymbols, setWithSymbols] = useState(false);
-  const [passwordLen, setPasswordLen] = useState(2048);
+  const [passwordLen, setPasswordLen] = useState(6);
   const [checkboxCtrl, setCheckboxCtrl] = useState([]);
   const [anyCheckboxChecked, setAnyCheckboxChecked] = useState(false);
   const [passwordGeneratorOpts, setPasswordGeneratorOpts] = useState(null);
   const [randomPassword, generateRandomPassword] = useRandomPasswordGenerator();
   const getVarNameString = useVarNameString();
+  const getRange = useRange();
 
   useEffect(() => {
     setCheckboxCtrl(
@@ -71,7 +73,14 @@ const PasswordGenerator = () => {
     );
 
     setPasswordGeneratorOpts(_passwordGeneratorOpts);
-  }, [withLowercase, withUppercase, checkboxCtrl]);
+  }, [
+    withLowercase,
+    withUppercase,
+    withNumbers,
+    withSymbols,
+    passwordLen,
+    checkboxCtrl,
+  ]);
 
   const onGenerateRandomPasswordHandler = e => {
     e.preventDefault();
@@ -106,6 +115,39 @@ const PasswordGenerator = () => {
             </div>
           );
         })}
+
+        <div className="row">
+          <div className="col d-flex justify-content-center">
+            <div className="form-group">
+              <label htmlFor="password-length-select">Password Length</label>
+              <select
+                className="form-control"
+                id="password-length-select"
+                value={passwordLen}
+                onChange={e => setPasswordLen(e.target.value)}
+              >
+                {getRange(128 - 6 + 1).map((_el, idx) => {
+                  const optionVal = idx + 6;
+
+                  return (
+                    <option key={uuid()} value={optionVal}>
+                      {optionVal}
+                    </option>
+                  );
+                })}
+                {getRange(2048 / (2048 / 4)).map((_el, idx) => {
+                  const optionVal = (idx + 1) * (2048 / 4);
+
+                  return (
+                    <option key={uuid()} value={optionVal}>
+                      {optionVal}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
 
         <div className="row">
           <div className="col d-flex justify-content-center">

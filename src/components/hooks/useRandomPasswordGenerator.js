@@ -1,7 +1,7 @@
-import useRandomNumber from './useRandomNumber';
-import useRange from './useRange';
+import useRandomNumber from "./useRandomNumber";
+import useRange from "./useRange";
 
-const { useState, useCallback } = require('react');
+const { useState, useCallback } = require("react");
 
 const useRandomPasswordGenerator = () => {
   const [password, setPassword] = useState(null);
@@ -15,24 +15,24 @@ const useRandomPasswordGenerator = () => {
         withUppercase,
         withNumbers,
         withSymbols,
-        passwordLen,
+        passwordLen
       } = opts ?? {
         withLowercase: false,
         withUppercase: false,
         withNumbers: false,
         withSymbols: false,
-        passwordLen: 0,
+        passwordLen: 6
       };
 
-      const charCode_a_z = ['a'.charCodeAt(0), 'z'.charCodeAt(0)];
-      const charCode_A_Z = ['A'.charCodeAt(0), 'Z'.charCodeAt(0)];
-      const charCode_0_9 = ['0'.charCodeAt(0), '9'.charCodeAt(0)];
+      const charCode_a_z = ["a".charCodeAt(0), "z".charCodeAt(0)];
+      const charCode_A_Z = ["A".charCodeAt(0), "Z".charCodeAt(0)];
+      const charCode_0_9 = ["0".charCodeAt(0), "9".charCodeAt(0)];
       const symbols = '!@#$%^&*()_+{}|:"<>?-=[]\\,./';
 
       const chars = [
         withLowercase ? charCode_a_z : null,
         withUppercase ? charCode_A_Z : null,
-        withNumbers ? charCode_0_9 : null,
+        withNumbers ? charCode_0_9 : null
       ]
         .filter(el => el !== null)
         .map(([charCodeMin, charCodeMax]) =>
@@ -40,13 +40,13 @@ const useRandomPasswordGenerator = () => {
             String.fromCharCode(idx + charCodeMin)
           )
         )
-        .concat(withSymbols ? symbols.split('') : [])
+        .concat(withSymbols ? symbols.split("") : [])
         .flat();
 
       setPassword(
-        getRange(passwordLen ?? 0)
+        getRange(passwordLen ?? 6)
           .map(() => chars[getRandomNumber({ min: 0, max: chars.length - 1 })])
-          .join('')
+          .join("")
       );
     },
     [getRange, getRandomNumber]
