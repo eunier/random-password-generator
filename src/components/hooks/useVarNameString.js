@@ -1,9 +1,5 @@
 import { useCallback } from 'react';
 
-const useVarNameString = () => {
-  const getVarNameString = useCallback(obj => Object.keys(obj)[0], []);
-
-  return getVarNameString;
-};
+const useVarNameString = () => useCallback(obj => Object.keys(obj)[0], []);
 
 export default useVarNameString;

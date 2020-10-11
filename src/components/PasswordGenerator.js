@@ -17,13 +17,13 @@ const PasswordGenerator = () => {
     setCheckboxCtrl(
       [
         [
-          Object.keys({ withLowercase })[0],
+          getVarNameString({ withLowercase }),
           withLowercase,
           setWithLowercase,
           'Lowercase Letters',
         ],
         [
-          Object.keys({ withUppercase })[0],
+          getVarNameString({ withUppercase }),
           withUppercase,
           setWithUppercase,
           'Uppercase Letters',
@@ -35,7 +35,7 @@ const PasswordGenerator = () => {
         desc,
       }))
     );
-  }, [withLowercase, withUppercase]);
+  }, [withLowercase, withUppercase, getVarNameString]);
 
   useEffect(() => {
     generateRandomPassword();
