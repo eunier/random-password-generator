@@ -10,15 +10,18 @@ const useRandomPasswordGenerator = () => {
 
   const generateRandomPassword = useCallback(
     opts => {
+      const { withLowercase, withUppercase } = opts ?? {
+        withLowercase: false,
+        withUppercase: false,
+      };
+      
       const passwordLen = 30;
-      const charCode_a = 'a'.charCodeAt(0);
-      const charCode_z = 'z'.charCodeAt(0);
-      const charCode_A = 'A'.charCodeAt(0);
-      const charCode_Z = 'Z'.charCodeAt(0);
+      const charCode_a_z = ['a'.charCodeAt(0), 'z'.charCodeAt(0)];
+      const charCode_A_Z = ['A'.charCodeAt(0), 'Z'.charCodeAt(0)];
 
       const chars = [
-        opts?.withLowercase ? [charCode_a, charCode_z] : null,
-        opts?.withUppercase ? [charCode_A, charCode_Z] : null,
+        withLowercase ? charCode_a_z : null,
+        withUppercase ? charCode_A_Z : null,
       ]
         .filter(el => el !== null)
         .map(([charCodeMin, charCodeMax]) =>

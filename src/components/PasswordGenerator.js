@@ -38,10 +38,6 @@ const PasswordGenerator = () => {
   }, [withLowercase, withUppercase, getVarNameString]);
 
   useEffect(() => {
-    generateRandomPassword();
-  }, [generateRandomPassword]);
-
-  useEffect(() => {
     const checkboxesValues = checkboxCtrl.map(({ state }) => state);
     const containsCheckedCheckbox = withOption => withOption === true;
 
