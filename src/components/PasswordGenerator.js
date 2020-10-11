@@ -5,20 +5,33 @@ import useRandomPasswordGenerator from './hooks/useRandomPasswordGenerator';
 const PasswordGenerator = () => {
   const [randomPassword, generateRandomPassword] = useRandomPasswordGenerator();
 
-  useEffect(() => generateRandomPassword(), []);
+  useEffect(() => generateRandomPassword(), [generateRandomPassword]);
+
+  const onGenerateRandomPasswordHandler = e => {
+    e.preventDefault();
+  };
 
   return (
     <div className="container">
-      <div className="input-group mb3">
-        <input className="form-control" type="text" />
-        <div className="input-group-append">
-          <button className="btn btn-primary" type="button">
-            Generate Random Password
-          </button>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <form onSubmit={onGenerateRandomPasswordHandler}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              onClick={() => generateRandomPassword()}
+            >
+              Generate Random Password
+            </button>
+          </form>
         </div>
       </div>
 
-      <div>Password: {randomPassword}</div>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <div>Password: {randomPassword}</div>
+        </div>
+      </div>
     </div>
   );
 };
