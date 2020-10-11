@@ -7,6 +7,8 @@ import useVarNameString from './hooks/useVarNameString';
 const PasswordGenerator = () => {
   const [withLowercase, setWithLowercase] = useState(false);
   const [withUppercase, setWithUppercase] = useState(false);
+  const [withNumbers, setWithNumbers] = useState(false);
+  const [withSymbols, setWithSymbols] = useState(false);
   const [checkboxCtrl, setCheckboxCtrl] = useState([]);
   const [anyCheckboxChecked, setAnyCheckboxChecked] = useState(false);
   const [passwordGeneratorOpts, setPasswordGeneratorOpts] = useState(null);
@@ -28,6 +30,18 @@ const PasswordGenerator = () => {
           setWithUppercase,
           'Uppercase Letters',
         ],
+        [
+          getVarNameString({ withNumbers }),
+          withNumbers,
+          setWithNumbers,
+          'Numbers',
+        ],
+        [
+          getVarNameString({ withSymbols }),
+          withSymbols,
+          setWithSymbols,
+          'Symbols',
+        ],
       ].map(([key, state, setState, desc]) => ({
         key,
         state,
@@ -35,7 +49,13 @@ const PasswordGenerator = () => {
         desc,
       }))
     );
-  }, [withLowercase, withUppercase, getVarNameString]);
+  }, [
+    withLowercase,
+    withUppercase,
+    withNumbers,
+    withSymbols,
+    getVarNameString,
+  ]);
 
   useEffect(() => {
     const checkboxesValues = checkboxCtrl.map(({ state }) => state);
@@ -58,7 +78,7 @@ const PasswordGenerator = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-sm">
       <form onSubmit={onGenerateRandomPasswordHandler}>
         {checkboxCtrl.map(({ key, state, setState, desc }) => {
           key = `${key}-${uuid()}`;
@@ -101,7 +121,7 @@ const PasswordGenerator = () => {
 
       <div className="row">
         <div className="col d-flex justify-content-center">
-          <p>{randomPassword}</p>
+          <p className="text-break text-monospace">{randomPassword}</p>
         </div>
       </div>
     </div>

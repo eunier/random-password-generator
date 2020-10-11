@@ -10,14 +10,19 @@ const useRandomPasswordGenerator = () => {
 
   const generateRandomPassword = useCallback(
     opts => {
-      let { withLowercase, withUppercase, withNumbers, withSymbols } = opts ?? {
+      const {
+        withLowercase,
+        withUppercase,
+        withNumbers,
+        withSymbols,
+      } = opts ?? {
         withLowercase: false,
         withUppercase: false,
         withNumbers: false,
         withSymbols: false,
       };
 
-      const passwordLen = 50;
+      const passwordLen = 2048;
       const charCode_a_z = ['a'.charCodeAt(0), 'z'.charCodeAt(0)];
       const charCode_A_Z = ['A'.charCodeAt(0), 'Z'.charCodeAt(0)];
       const charCode_0_9 = ['0'.charCodeAt(0), '9'.charCodeAt(0)];
@@ -38,9 +43,9 @@ const useRandomPasswordGenerator = () => {
         .flat();
 
       setPassword(
-        getRange(passwordLen).map(
-          () => chars[getRandomNumber({ min: 0, max: chars.length - 1 })]
-        )
+        getRange(passwordLen)
+          .map(() => chars[getRandomNumber({ min: 0, max: chars.length - 1 })])
+          .join('')
       );
     },
     [getRange, getRandomNumber]
