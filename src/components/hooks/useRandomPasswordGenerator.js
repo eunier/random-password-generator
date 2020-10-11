@@ -15,7 +15,7 @@ const useRandomPasswordGenerator = () => {
         withUppercase,
         withNumbers,
         withSymbols,
-        // passwordLen,
+        passwordLen,
       } = opts ?? {
         withLowercase: false,
         withUppercase: false,
@@ -23,8 +23,6 @@ const useRandomPasswordGenerator = () => {
         withSymbols: false,
         passwordLen: 0,
       };
-
-      const passwordLen = 2048;
 
       const charCode_a_z = ['a'.charCodeAt(0), 'z'.charCodeAt(0)];
       const charCode_A_Z = ['A'.charCodeAt(0), 'Z'.charCodeAt(0)];
