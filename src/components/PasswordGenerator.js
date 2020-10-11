@@ -6,56 +6,94 @@ import useRandomPasswordGenerator from './hooks/useRandomPasswordGenerator';
 const PasswordGenerator = () => {
   const [withLowercase, setWithLowercase] = useState(false);
   const [withUppercase, setWithUppercase] = useState(false);
+  const [checkboxCtrl, setCheckboxCtrl] = useState([]);
+  const [anyCheckboxChecked, setAnyCheckboxChecked] = useState(false);
+  const [passwordGeneratorOpts, setPasswordGeneratorOpts] = useState(null);
   const [randomPassword, generateRandomPassword] = useRandomPasswordGenerator();
 
-  useEffect(() => generateRandomPassword(), [generateRandomPassword]);
+  useEffect(() => {
+    setCheckboxCtrl(
+      [
+        [
+          Object.keys({ withLowercase })[0],
+          withLowercase,
+          setWithLowercase,
+          'Lowercase Letters',
+        ],
+        [
+          Object.keys({ withUppercase })[0],
+          withUppercase,
+          setWithUppercase,
+          'Uppercase Letters',
+        ],
+      ].map(([key, state, setState, desc]) => ({
+        key,
+        state,
+        setState,
+        desc,
+      }))
+    );
+  }, [withLowercase, withUppercase]);
+
+  useEffect(() => {
+    generateRandomPassword();
+  }, [generateRandomPassword]);
+
+  useEffect(() => {
+    const checkboxesValues = checkboxCtrl.map(({ state }) => state);
+    const containsCheckedCheckbox = withOption => withOption === true;
+
+    setAnyCheckboxChecked(!!checkboxesValues.find(containsCheckedCheckbox));
+    setPasswordGeneratorOpts(
+      checkboxCtrl.map(({ key, state }) => ({
+        [key]: state,
+      }))
+    );
+  }, [withLowercase, withUppercase, checkboxCtrl]);
 
   const onGenerateRandomPasswordHandler = e => {
     e.preventDefault();
+    console.log({ passwordGeneratorOpts });
+    generateRandomPassword(passwordGeneratorOpts);
   };
-
-  const checkboxCtrl = [
-    [uuid(), withLowercase, setWithLowercase, 'Lowercase Letters'],
-    [uuid(), withUppercase, setWithUppercase, 'Uppercase Letters'],
-  ].map(([key, state, setState, checkboxDesc]) => ({
-    key,
-    state,
-    setState,
-    checkboxDesc,
-  }));
 
   return (
     <div className="container">
       <form onSubmit={onGenerateRandomPasswordHandler}>
-        {checkboxCtrl.map(({ key, state, setState, checkboxDesc }) => (
-          <div className="row" key={key}>
-            <div className="col d-flex justify-content-center">
-              <div className="form-group">
-                <input
-                  className="form-check-input"
-                  id={`lowercase-letters-${key}`}
-                  type="checkbox"
-                  checked={state}
-                  onChange={e => setState(e.target.checked)}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`lowercase-letters-${key}`}
-                >
-                  {checkboxDesc}
-                </label>
-              </div>
-            </div>
-          </div>
-        ))}
+        {checkboxCtrl
+          ? checkboxCtrl.map(({ key, state, setState, desc }) => {
+              key = `${key}-${uuid()}`;
+
+              return (
+                <div className="row" key={key}>
+                  <div className="col d-flex justify-content-center">
+                    <div className="form-group">
+                      <input
+                        className="form-check-input"
+                        id={`form-check-input-${key}`}
+                        type="checkbox"
+                        checked={state}
+                        onChange={e => setState(e.target.checked)}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor={`form-check-input-${key}`}
+                      >
+                        {desc}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : null}
 
         <div className="row">
           <div className="col d-flex justify-content-center">
             <button
               className="btn btn-primary"
               type="submit"
-              disabled={true}
-              onClick={() => generateRandomPassword()}
+              disabled={!anyCheckboxChecked}
             >
               Generate Random Password
             </button>
